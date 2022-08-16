@@ -9,23 +9,34 @@ TEST_DATA = {
 }
 
 
-def sum_score_games(points):
+def generate_games_stat(points):
+    """
+    Verify data and generate useful stat.
+    :param points: list
+    :return: tuple
+    (sum, mean, max, min)
+    """
     if not isinstance(points, list):
         return "It's not a list!"
     score = []
     if len(points) <= 0:
-        return 0
+        return 0,
     for i in points:
         try:
             _i = int(i)
         except ValueError:
             _i = 0
-    score.append(_i)
-    return sum(score)
+        score.append(_i)
+    _sum = sum(score)
+    _mean = _sum / len(score)
+    _max = max(score)
+    _min = min(score)
+    return _sum, _mean, _max, _min
 
 
 if __name__ == "__main__":
     print("Starting")
     for k, v in TEST_DATA.items():
-        _score = sum_score_games(v) if isinstance(sum_score_games(v), int) else 0
-        print(f"Squadra: {k} totale: {_score}")
+        _stat = generate_games_stat(v)
+        _output = " / ".join(str(i) for i in _stat)
+        print(f"Team: {k} sum/mean/max/min: {_output}")
