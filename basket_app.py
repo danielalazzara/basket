@@ -1,12 +1,6 @@
-TEST_DATA = {
-    "abc": [1, 2, 3],
-    "def": [4, 5, 6, 7],
-    "ghi": [56, 89, "rt"],
-    "jkl": [8, 9, 1],
-    "mno": [2],
-    "pqr": [],
-    "stu": [3, 4, 5],
-}
+# import pandas as pd
+
+# data = pd.read_csv('data/Basket.csv', sep=';')
 
 
 def generate_games_stat(points):
@@ -34,9 +28,27 @@ def generate_games_stat(points):
     return _sum, _mean, _max, _min
 
 
+def tournament_points(team_1, team_2, t_1_score, t_2_score):
+    """
+    Evaluate a match and return the winning team and their points.
+    :param team_1: string
+    :param team_2: string
+    :param t_1_score: int
+    :param t_2_score: int
+    :return: tuple
+    """
+
+    if t_1_score > t_2_score:
+        winning_team = team_1
+        team1_points = 2
+        team2_points = 1
+    else:
+        winning_team = team_2
+        team1_points = 1
+        team2_points = 2
+
+    return winning_team, team1_points, team2_points
+
+
 if __name__ == "__main__":
     print("Starting")
-    for k, v in TEST_DATA.items():
-        _stat = generate_games_stat(v)
-        _output = " / ".join(str(i) for i in _stat)
-        print(f"Team: {k} sum/mean/max/min: {_output}")
