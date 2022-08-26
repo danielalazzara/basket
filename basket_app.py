@@ -1,8 +1,3 @@
-# import pandas as pd
-
-# data = pd.read_csv('data/Basket.csv', sep=';')
-
-
 def generate_games_stat(points):
     """
     Verify data and generate useful stat.
