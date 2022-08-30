@@ -1,3 +1,6 @@
+import parse_data
+
+
 def generate_games_stat(points):
     """
     Verify data and generate useful stat.
@@ -47,3 +50,13 @@ def tournament_points(team_1, team_2, t_1_score, t_2_score):
 
 if __name__ == "__main__":
     print("Starting")
+    print("Initializing data")
+    data = parse_data.load_data()
+    games = parse_data.parse_games(data)
+    # print(games)
+    for game in games:
+        _ts_1, _ts_2 = game.items()
+        _team_1, _score_1 = _ts_1
+        _team_2, _score_2 = _ts_2
+        _ = tournament_points(_team_1, _team_2, _score_1, _score_2)
+        print(_)
