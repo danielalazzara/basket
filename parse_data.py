@@ -1,23 +1,29 @@
 import pandas as pd
 
 
+def clean_up(a_string):
+    return a_string.lower().replace(' ', '_').replace('ª', '')
+
+
 def load_data():
     data = pd.read_csv('data/Basket.csv', sep=';')
-    final_data = data[['team_1', 'team_2', 'score_1', 'score_2']].dropna()
+    final_data = data[['fase', 'team_1', 'team_2', 'score_1', 'score_2']].dropna()
     final_data['score_1'] = final_data['score_1'].astype(int)
     final_data['score_2'] = final_data['score_2'].astype(int)
+    final_data['fase'] = final_data['fase'].apply(clean_up)
     return final_data
 
 
 def parse_games(full_data):
-    games = []
+    all_games = []
     for index, row in full_data.iterrows():
         team_1 = row['team_1']
         team_2 = row['team_2']
         score_1 = row['score_1']
         score_2 = row['score_2']
-        games.append({team_1: score_1, team_2: score_2})
-    return games
+        fase = row['fase']
+        all_games.append({'fase': fase, team_1: score_1, team_2: score_2})
+    return all_games
 
 
 if __name__ == "__main__":
