@@ -26,8 +26,22 @@ def parse_games(full_data):
     return all_games
 
 
+def get_team_names(full_data):
+    """
+    Return team's names
+    :return: set
+    """
+    names = set()
+    for index, row in full_data.iterrows():
+        names.add(row['team_1'])
+        names.add(row['team_2'])
+    return sorted(names)
+
+
 if __name__ == "__main__":
     print("Parsing data")
     data = load_data()
     games = parse_games(data)
     print(games)
+    teams = get_team_names(data)
+    print(teams)

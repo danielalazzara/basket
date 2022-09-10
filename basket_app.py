@@ -96,7 +96,13 @@ if __name__ == "__main__":
     final_four = all_results['final_abp'].keys()
     # print(final_four)
     print()
-    print('Ranking')
+    print('Final Four Ranking')
     for team in final_four:
         _sum, _mean, _max, _min = teams_stat(team, games)
         print(f"{team:>13} - total points: {_sum:>5}, mean points: {_mean:6.2f}, maximum point: {_max:>4}, minimum point: {_min:>3}")
+    print()
+    print('All Teams Ranking')
+    teams = parse_data.get_team_names(data)
+    for team in teams:
+        _sum, _mean, _max, _min = teams_stat(team, games)
+        print(f"{team:>16} - total points: {_sum:>5}, mean points: {_mean:6.2f}, maximum point: {_max:>4}, minimum point: {_min:>3}")
