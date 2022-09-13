@@ -78,11 +78,21 @@ def teams_stat(team, games):
     (sum, mean, max, min)
     """
     result = []
+    wins = 0
+    games_played = 0
     for game in games:
         if team in game.keys():
+            team_score = game[team]
+            other_team = [t for t in game.keys() if not t == team and not t == 'fase'][0]
+            other_team_score = game[other_team]
+            if team_score > other_team_score:
+                wins += 1
+            games_played += 1
             result.append(game.get(team))
+    percentage = wins / games_played
+
     stats = generate_games_stat(result)
-    return stats
+    return stats, games_played, wins, percentage
 
 
 if __name__ == "__main__":
@@ -98,11 +108,11 @@ if __name__ == "__main__":
     print()
     print('Final Four Ranking')
     for team in final_four:
-        _sum, _mean, _max, _min = teams_stat(team, games)
-        print(f"{team:>13} - total points: {_sum:>5}, mean points: {_mean:6.2f}, maximum point: {_max:>4}, minimum point: {_min:>3}")
+        (_sum, _mean, _max, _min), games_played, wins, percentage = teams_stat(team, games)
+        print(f"{team:>13} - total points: {_sum:>5}, mean points: {_mean:6.2f}, maximum point: {_max:>4}, minimum point: {_min:>3}, games played: {games_played}, wins: {wins:>3} ({percentage:>7.2%})")
     print()
     print('All Teams Ranking')
     teams = parse_data.get_team_names(data)
     for team in teams:
-        _sum, _mean, _max, _min = teams_stat(team, games)
-        print(f"{team:>16} - total points: {_sum:>5}, mean points: {_mean:6.2f}, maximum point: {_max:>4}, minimum point: {_min:>3}")
+        (_sum, _mean, _max, _min), games_played, wins, percentage = teams_stat(team, games)
+        print(f"{team:>16} - total points: {_sum:>5}, mean points: {_mean:6.2f}, maximum point: {_max:>4}, minimum point: {_min:>3}, games played: {games_played:>3}, wins: {wins:>3} ({percentage:>77.2%})")
