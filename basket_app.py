@@ -115,4 +115,4 @@ if __name__ == "__main__":
     teams = parse_data.get_team_names(data)
     for team in teams:
         (_sum, _mean, _max, _min), games_played, wins, percentage = teams_stat(team, games)
-        print(f"{team:>16} - total points: {_sum:>5}, mean points: {_mean:6.2f}, maximum point: {_max:>4}, minimum point: {_min:>3}, games played: {games_played:>3}, wins: {wins:>3} ({percentage:>77.2%})")
+        print(f"{team:>16} - total points: {_sum:>5}, mean points: {_mean:6.2f}, maximum point: {_max:>4}, minimum point: {_min:>3}, games played: {games_played:>3}, wins: {wins:>3} ({percentage:>7.2%})")
