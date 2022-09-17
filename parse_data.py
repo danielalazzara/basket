@@ -5,8 +5,8 @@ def clean_up(a_string):
     return a_string.lower().replace(' ', '_').replace('ª', '')
 
 
-def load_data():
-    data = pd.read_csv('data/Basket.csv', sep=';')
+def load_data(csv_file_name, csv_separator):
+    data = pd.read_csv(csv_file_name, sep=csv_separator)
     final_data = data[['fase', 'team_1', 'team_2', 'score_1', 'score_2']].dropna()
     final_data['score_1'] = final_data['score_1'].astype(int)
     final_data['score_2'] = final_data['score_2'].astype(int)
@@ -40,7 +40,7 @@ def get_team_names(full_data):
 
 if __name__ == "__main__":
     print("Parsing data")
-    data = load_data()
+    data = load_data('data/Basket.csv', ';')
     games = parse_games(data)
     print(games)
     teams = get_team_names(data)

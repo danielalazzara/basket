@@ -1,5 +1,6 @@
 import pytest
 import basket_app
+from collections import Counter
 
 TEST_TEAM_SCORES = {
     "abc": [1, 2, 3],
@@ -30,6 +31,9 @@ TEST_SINGLE_MATCH = {
     "def": 78,
 }
 
+TEST_GAMES = [{'fase': '1_fase', 'abc': 72, 'def': 35},
+            {'fase': '1_fase', 'ghi': 68, 'abc': 54}]
+
 
 def test_generate_games_stat():
     results = []
@@ -44,4 +48,16 @@ def test_tournament_points():
     t1_points = list(TEST_SINGLE_MATCH.values())[0]
     t2_points = list(TEST_SINGLE_MATCH.values())[1]
     result = basket_app.tournament_points(t1, t2, t1_points, t2_points)
-    assert result == ("def", 1, 2)
+    assert result == ('def', 1, 'abc', 2)
+
+
+def test_ranking():
+    result = basket_app.ranking(TEST_GAMES)
+    assert result == {'1_fase': Counter({'abc': 3, 'ghi': 2, 'def': 1})}
+
+
+def test_teams_stat():
+    result = basket_app.teams_stat('abc', TEST_GAMES)
+    assert result == ((126, 63.0, 72, 54), 2, 1, 0.5)
+
+

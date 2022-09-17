@@ -98,13 +98,14 @@ def teams_stat(team, games):
 if __name__ == "__main__":
     print("Starting")
     print("Initializing data")
-    data = parse_data.load_data()
+    data = parse_data.load_data('data/Basket.csv', ';')
     print("Calculate the ranking")
     games = parse_data.parse_games(data)
     all_results = ranking(games)
-    # print(all_results)
     final_four = all_results['final_abp'].keys()
-    # print(final_four)
+    print()
+    all_teams = parse_data.get_team_names(data)
+    print(f"Season 2021-2022 - Teams (Total: {len(all_teams)}) {', '.join(all_teams)}")
     print()
     print('Final Four Ranking')
     for team in final_four:
