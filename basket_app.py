@@ -1,5 +1,10 @@
 import parse_data
 from collections import defaultdict, Counter
+import argparse
+
+
+DEFAULT_CSV_FILE = 'data/Basket.csv'
+DEFAULT_CSV_SEPARATOR = ';'
 
 
 def generate_games_stat(points):
@@ -95,10 +100,25 @@ def teams_stat(team, games):
     return stats, games_played, wins, percentage
 
 
+def get_arguments():
+    """
+    Get arguments from command line invocation.
+    :return: str
+    """
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-f", "--file", help="use the file", action="store", default=DEFAULT_CSV_FILE)
+    parser.add_argument("-s", "--separator", help="use the file", action="store", default=DEFAULT_CSV_SEPARATOR)
+    args = parser.parse_args()
+    _f = args.file
+    _s = args.separator
+    return _f, _s
+
+
 if __name__ == "__main__":
     print("Starting")
+    file_argument, separator_argument = get_arguments()
     print("Initializing data")
-    data = parse_data.load_data('data/Basket.csv', ';')
+    data = parse_data.load_data(file_argument, separator_argument)
     print("Calculate the ranking")
     games = parse_data.parse_games(data)
     all_results = ranking(games)
