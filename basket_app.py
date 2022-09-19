@@ -1,9 +1,13 @@
+#!/usr/bin/env python
+
 import parse_data
 from collections import defaultdict, Counter
 import argparse
+import re
+import sys
 
 
-DEFAULT_CSV_FILE = 'data/Basket.csv'
+DEFAULT_CSV_FILE = 'data/basket_2021-2022.csv'
 DEFAULT_CSV_SEPARATOR = ';'
 
 
@@ -110,13 +114,16 @@ def get_arguments():
     parser.add_argument("-s", "--separator", help="use the file", action="store", default=DEFAULT_CSV_SEPARATOR)
     args = parser.parse_args()
     _f = args.file
+    if not re.match(r".*\w+_\d{4}-\d{4}\.csv", _f):
+        sys.exit('File name invalid')
     _s = args.separator
-    return _f, _s
+    season = re.match(r".*\w+_(\d{4}-\d{4})\.csv", _f).group(1)
+    return _f, _s, season
 
 
 if __name__ == "__main__":
     print("Starting")
-    file_argument, separator_argument = get_arguments()
+    file_argument, separator_argument, season = get_arguments()
     print("Initializing data")
     data = parse_data.load_data(file_argument, separator_argument)
     print("Calculate the ranking")
@@ -125,7 +132,7 @@ if __name__ == "__main__":
     final_four = all_results['final_abp'].keys()
     print()
     all_teams = parse_data.get_team_names(data)
-    print(f"Season 2021-2022 - Teams (Total: {len(all_teams)}) {', '.join(all_teams)}")
+    print(f"Season {season} - Teams (Total: {len(all_teams)}) {', '.join(all_teams)}")
     print()
     print('Final Four Ranking')
     for team in final_four:
